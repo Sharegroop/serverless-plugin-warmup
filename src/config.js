@@ -45,6 +45,9 @@ function getWarmerConfig(config, defaultOpts) {
       ? config.logRetentionInDays
       : defaultOpts.logRetentionInDays,
     prewarm: (config.prewarm !== undefined) ? config.prewarm : defaultOpts.prewarm,
+    lambdaRuntime: (config.lambdaRuntime !== undefined)
+      ? config.lambdaRuntime
+      : defaultOpts.lambdaRuntime,
   };
   /* eslint-enable no-nested-ternary */
 }

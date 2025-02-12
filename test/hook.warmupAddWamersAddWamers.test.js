@@ -1297,6 +1297,31 @@ describe('Serverless warmup plugin warmup:warmers:addWarmers:addWarmers hook', (
       }));
   });
 
+  it('Should use the lambdaRuntime from options if present', async () => {
+    const serverless = getServerlessConfig({
+      service: {
+        custom: {
+          warmup: {
+            default: {
+              enabled: true,
+              lambdaRuntime: 'nodejs18.x',
+            },
+          },
+        },
+        functions: { someFunc1: { name: 'someFunc1' }, someFunc2: { name: 'someFunc2' } },
+      },
+    });
+    const plugin = new WarmUp(serverless, {});
+
+    await plugin.hooks['before:warmup:addWarmers:addWarmers']();
+    await plugin.hooks['warmup:addWarmers:addWarmers']();
+
+    expect(plugin.serverless.service.functions.warmUpPluginDefault)
+      .toEqual(getExpectedFunctionConfig({
+        runtime: 'nodejs18.x',
+      }));
+  });
+
   it('Should unset the environment variables from options as default', async () => {
     const serverless = getServerlessConfig({
       service: {

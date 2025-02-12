@@ -80,6 +80,7 @@ There are also some options which can be set under `custom.warmup.<yourWarmer>` 
 * **payload** The payload to send to your lambda. This helps your lambda identify when the call comes from this plugin (defaults to `{ "source": "serverless-plugin-warmup" }`)
 * **payloadRaw** Whether to leave the payload as-is. If false, the payload will be stringified into JSON. (defaults to `false`)
 * **concurrency** The number of times that each of your lambda functions will be called in parallel. This can be used in a best-effort attempt to force AWS to spin up more parallel containers for your lambda. (defaults to `1`)
+* **lambdaRuntime** The runtime to apply to the warmer lambda (defaults to `nodejs14.x`)
 
 ```yaml
 custom:
@@ -115,6 +116,7 @@ custom:
         other: 20
       payloadRaw: true # Won't JSON.stringify() the payload, may be necessary for Go/AppSync deployments
       concurrency: 5 # Warm up 5 concurrent instances
+      lambdaRuntime: nodejs18.x # To force the runtime of the warmup lambda created
     
 functions:
   myColdfunction:
